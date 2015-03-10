@@ -1,5 +1,4 @@
 import numpy as np
-import scipy.sparse
 
 from pyspark.mllib.linalg import SparseVector
 
@@ -14,7 +13,7 @@ def minhash(v, a, b, p, m):
     Parameters
     ----------
     v : object
-        Python list, NumPy array, or a sparse vector.
+        Python list, NumPy array, or SparseVector.
     a : integer
         Seed, > 0.
     b : integer
@@ -32,8 +31,6 @@ def minhash(v, a, b, p, m):
     indices = None
     if type(v) is SparseVector:
         indices = v.indices
-    elif scipy.sparse.issparse(v):
-        indices = v.nonzero()
     elif type(v) is np.ndarray or type(v) is list:
         indices = np.arange(len(v), dtype = np.int)
     else:
