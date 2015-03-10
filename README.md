@@ -1,7 +1,14 @@
 Spark-LSH
 =========
 
-Locality sensitive hashing for [Apache Spark](http://spark.apache.org/). Largely a PySpark port of the [spark-hash project](https://github.com/mrsqueeze/spark-hash).
+Locality-sensitive hashing for [Apache Spark](http://spark.apache.org/). Largely a PySpark port of the [spark-hash project](https://github.com/mrsqueeze/spark-hash).
+
+Prerequisites
+-------------
+
+- Python 2.7+
+- SciPy 0.15+
+- NumPy 1.9+
 
 Implementation Details
 ----------------------
