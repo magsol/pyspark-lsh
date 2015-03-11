@@ -15,26 +15,27 @@ def distance_metric(kv):
     Output <k, v> pair is: <bucket id, jaccard distance>
     """
     bid, X = kv[0], kv[1].data
-    if type(X[0] is SparseVector):
+    if type(X[0]) is SparseVector:
         Y = np.array([x.toArray() for x in X])
         X = Y
     return [bid, distance.pdist(np.array(X), 'jaccard').sum()]
 
-def run(zdata, p, m, n, b, c):
+def run(data, p, m, n, b, c):
     """
     Starts the main LSH process.
 
     Parameters
     ----------
-    zdata : RDD[Vector, Int]
-        RDD of data points, zipped with unique integer indices. Acceptable vector
-        types are numpy.ndarray or PySpark SparseVector.
+    zdata : RDD[Vector]
+        RDD of data points. Acceptable vector types are numpy.ndarray
+        or PySpark SparseVector.
     p : integer, larger than the largest value in data.
     m : integer, number of bins for hashing.
     n : integer, number of rows to split the signatures into.
     b : integer, number of bands.
     c : integer, minimum allowable cluster size.
     """
+    zdata = data.zipWithIndex()
     seeds = np.vstack([np.random.random_integers(p, size = n), np.random.random_integers(0, p, size = n)]).T
     hashes = [functools.partial(hasher.minhash, a = s[0], b = s[1], p = p, m = m) for s in seeds]
 
@@ -47,7 +48,7 @@ def run(zdata, p, m, n, b, c):
     # Output format is:
     # <(band idx, minhash list), vector idx>
     bands = sigs.groupByKey() \
-        .map(lambda x: [(x[0][1], hash(x[1])), x[0][0]]) \
+        .map(lambda x: [(x[0][1], hash(frozenset(x[1].data))), x[0][0]]) \
         .groupByKey().cache()
 
     # Should we filter?
