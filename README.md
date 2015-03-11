@@ -6,6 +6,7 @@ Locality-sensitive hashing for [Apache Spark](http://spark.apache.org/). Largely
 Prerequisites
 -------------
 
+- Spark 1.2+
 - Python 2.7+
 - SciPy 0.15+
 - NumPy 1.9+
