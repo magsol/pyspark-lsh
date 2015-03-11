@@ -54,4 +54,6 @@ Work on this project is ongoing and includes:
  - **Additional hashing functions** in particular to address the propensity for dense vectors to generate signatures of all 0s using `minhash`.
      - **Density sensitive hashing**, as outlined in the [Lin *et al* IEEE 2012 paper](http://arxiv.org/pdf/1205.2930.pdf).
      - **Dimension spans**, as outlined in the [Hefeeda *et al* HPDC 2012 paper](http://dl.acm.org/citation.cfm?id=2287111).
+ - **User-supplied hash functions** will be allowed.
+ - **User-supplied distance metrics** will be allowed.
  - **Connection to distributed affinity matrix computation** as the initial groundwork for spectral clustering on Spark.
